@@ -1,8 +1,11 @@
 rootProject.name = "fluid-i18n"
 
+includeBuild("modules/data-generator")
+
 file("modules")
 	.listFiles()!!
 	.filter(File::isDirectory)
+	.filter { it.name != "data-generator" }
 	.forEach { directory ->
 		val name = directory.name
 

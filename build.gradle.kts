@@ -13,14 +13,15 @@ fluidLibraryModule(description = "Kotlin multiplatform internationalization libr
 			dependencies {
 				implementation(fluid("country", "0.9.1"))
 				implementation(fluid("currency", "0.9.1"))
-				implementation(project(":fluid-i18n-data"))
+				implementation(project(":fluid-i18n-data-identifiers"))
+				implementation(project(":fluid-i18n-data-regions"))
 
 				api(fluid("locale", "0.9.2"))
 			}
 		}
 
 		darwin()
-		js(compiler = KotlinJsCompilerType.IR) // TODO https://youtrack.jetbrains.com/issue/KT-41332
+		js()
 		jvm()
 	}
 }

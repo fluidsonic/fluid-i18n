@@ -33,16 +33,16 @@ Usage
 val usa = Country.byCode("US")
 println(usa.name) // United States
 println(usa.shortName) // US
-println(usa.variantName) // United States
+println(usa.variantName) // null
 
 val locale = Locale.forLanguage("de")
 println(usa.name(locale)) // Vereinigte Staaten
 println(usa.shortName(locale)) // USA
-println(usa.variantName(locale)) // Vereinigte Staaten
+println(usa.variantName(locale)) // null
 
 val ivoryCoast = Country.forCode("CI")
 println(usa.name) // Côte d’Ivoire
-println(usa.shortName) // Côte d’Ivoire
+println(usa.shortName) // null
 println(usa.variantName) // Ivory Coast
 ```
 

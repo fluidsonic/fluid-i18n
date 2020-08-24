@@ -5,14 +5,15 @@
       <set>
         <option value="activate" />
         <option value="noActionIfCompileErrors" />
-        <option value="organizeImports" />
         <option value="reformat" />
       </set>
     </option>
     <option name="configurationPath" value="" />
     <option name="exclusions">
       <set>
-        <option value=".*\.java$" />
+        <option value=".*\.generated\.kt" />
+        <option value=".*\.java" />
+        <option value="Generated\.kt" />
         <option value="\.idea/.*" />
       </set>
     </option>

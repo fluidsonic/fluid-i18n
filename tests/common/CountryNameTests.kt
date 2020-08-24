@@ -16,14 +16,16 @@ class CountryNameTests {
 	@Test
 	fun testEnglishExamples() {
 		assertEquals(expected = "Germany", actual = germany.name)
-		assertEquals(expected = "Germany", actual = germany.shortName)
-		assertEquals(expected = "Germany", actual = germany.variantName)
+		assertEquals(expected = null, actual = germany.shortName)
+		assertEquals(expected = null, actual = germany.variantName)
+
 		assertEquals(expected = "Côte d’Ivoire", actual = ivoryCoast.name)
-		assertEquals(expected = "Côte d’Ivoire", actual = ivoryCoast.shortName)
+		assertEquals(expected = null, actual = ivoryCoast.shortName)
 		assertEquals(expected = "Ivory Coast", actual = ivoryCoast.variantName)
+
 		assertEquals(expected = "United States", actual = unitedStates.name)
 		assertEquals(expected = "US", actual = unitedStates.shortName)
-		assertEquals(expected = "United States", actual = unitedStates.variantName)
+		assertEquals(expected = null, actual = unitedStates.variantName)
 	}
 
 
@@ -32,13 +34,15 @@ class CountryNameTests {
 		val locale = Locale.forLanguage("de")
 
 		assertEquals(expected = "Deutschland", actual = germany.name(locale))
-		assertEquals(expected = "Deutschland", actual = germany.shortName(locale))
-		assertEquals(expected = "Deutschland", actual = germany.variantName(locale))
+		assertEquals(expected = null, actual = germany.shortName(locale))
+		assertEquals(expected = null, actual = germany.variantName(locale))
+
 		assertEquals(expected = "Côte d’Ivoire", actual = ivoryCoast.name(locale))
-		assertEquals(expected = "Côte d’Ivoire", actual = ivoryCoast.shortName(locale))
+		assertEquals(expected = null, actual = ivoryCoast.shortName(locale))
 		assertEquals(expected = "Elfenbeinküste", actual = ivoryCoast.variantName(locale))
+
 		assertEquals(expected = "Vereinigte Staaten", actual = unitedStates.name(locale))
 		assertEquals(expected = "USA", actual = unitedStates.shortName(locale))
-		assertEquals(expected = "Vereinigte Staaten", actual = unitedStates.variantName(locale))
+		assertEquals(expected = null, actual = unitedStates.variantName(locale))
 	}
 }

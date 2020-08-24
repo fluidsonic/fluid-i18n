@@ -4,14 +4,35 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/modules/data-generator" name="fluid-i18n-data-generator">
+                <projects>
+                  <project path="$PROJECT_DIR$/modules/data-generator" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/../fluid-cldr" name="fluid-cldr">
+                <projects>
+                  <project path="$PROJECT_DIR$/../fluid-cldr" />
+                  <project path="$PROJECT_DIR$/../fluid-cldr/modules/data" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="delegatedBuild" value="true" />
         <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/../fluid-cldr" />
+            <option value="$PROJECT_DIR$/../fluid-cldr/modules/data" />
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/modules/data" />
+            <option value="$PROJECT_DIR$/modules/data-generator" />
+            <option value="$PROJECT_DIR$/modules/data-identifiers" />
+            <option value="$PROJECT_DIR$/modules/data-regions" />
           </set>
         </option>
       </GradleProjectSettings>
