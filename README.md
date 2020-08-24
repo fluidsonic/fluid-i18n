@@ -48,6 +48,18 @@ println(usa.variantName) // Ivory Coast
 
 
 
+
+Building
+--------
+
+Build generated Kotlin files for Unicode CLDR data:
+
+```shell
+./gradlew generateCode   # macOS
+gradlew generateCode     # Windows
+```
+
+
 License
 -------
 
