@@ -12,12 +12,6 @@
                   <project path="$PROJECT_DIR$/modules/data-generator" />
                 </projects>
               </build>
-              <build path="$PROJECT_DIR$/../fluid-cldr" name="fluid-cldr">
-                <projects>
-                  <project path="$PROJECT_DIR$/../fluid-cldr" />
-                  <project path="$PROJECT_DIR$/../fluid-cldr/modules/data" />
-                </projects>
-              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -27,8 +21,6 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../fluid-cldr" />
-            <option value="$PROJECT_DIR$/../fluid-cldr/modules/data" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/modules/data-generator" />
             <option value="$PROJECT_DIR$/modules/data-identifiers" />
