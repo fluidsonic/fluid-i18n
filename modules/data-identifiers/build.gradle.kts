@@ -7,19 +7,15 @@ plugins {
 }
 
 fluidLibraryModule(description = "Internationalization data used by fluid-i18n") {
-	language {
-		withoutExplicitApi() // TODO remove once the new Kotlinpoet release is available
-	}
-
 	targets {
 		darwin()
-		js()
+		js(KotlinJsCompilerType.BOTH)
 		jvm()
 	}
 }
 
 tasks.register("generateCode") {
-	val destination = file("sources/common/Generated.kt").toPath()
+	val destination = file("sources/Generated.kt").toPath()
 
 	outputs.file(destination)
 

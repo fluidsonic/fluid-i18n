@@ -1,10 +1,10 @@
 // This file was automatically generated using the 'generateCode' Gradle task. Do not edit manually.
-package io.fluidsonic.i18n.data
+package io.fluidsonic.i18n.`data`
 
 import kotlin.Int
 import kotlin.String
 
-fun localizedNameForRegion_normal(
+public fun localizedNameForRegion_normal(
   query: Int,
   language: Int,
   script: Int,

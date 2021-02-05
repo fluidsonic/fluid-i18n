@@ -8,20 +8,16 @@ plugins {
 }
 
 fluidLibraryModule(description = "Internationalization data used by fluid-i18n") {
-	language {
-		withoutExplicitApi() // TODO remove once the new Kotlinpoet release is available
-	}
-
 	targets {
 		darwin()
-		js()
+		js(KotlinJsCompilerType.BOTH)
 		jvm()
 	}
 }
 
 tasks.register("generateCode") {
 	CldrRegionNameAlternative.values().forEach { alternative ->
-		val destination = file("sources/common/RegionNames_$alternative.generated.kt").toPath()
+		val destination = file("sources/RegionNames_$alternative.generated.kt").toPath()
 
 		outputs.file(destination)
 

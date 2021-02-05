@@ -1,10 +1,10 @@
 // This file was automatically generated using the 'generateCode' Gradle task. Do not edit manually.
-package io.fluidsonic.i18n.data
+package io.fluidsonic.i18n.`data`
 
 import kotlin.Int
 import kotlin.String
 
-fun indexForLanguage(language: String?): Int {
+public fun indexForLanguage(language: String?): Int {
   if (language == null) {
     return 0
   }
@@ -582,7 +582,7 @@ fun indexForLanguage(language: String?): Int {
   }
 }
 
-fun indexForRegion(region: String?): Int {
+public fun indexForRegion(region: String?): Int {
   if (region == null) {
     return 0
   }
@@ -1017,7 +1017,7 @@ fun indexForRegion(region: String?): Int {
   }
 }
 
-fun indexForScript(script: String?): Int = when (script) {
+public fun indexForScript(script: String?): Int = when (script) {
   null -> 0
   "Cyrl" -> 1
   "Latn" -> 2
@@ -1034,7 +1034,7 @@ fun indexForScript(script: String?): Int = when (script) {
   else -> -1
 }
 
-fun indexForVariant(variant: String?): Int = when (variant) {
+public fun indexForVariant(variant: String?): Int = when (variant) {
   null -> 0
   "VALENCIA" -> 1
   "POSIX" -> 2
