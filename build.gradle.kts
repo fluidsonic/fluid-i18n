@@ -2,7 +2,7 @@ import io.fluidsonic.gradle.*
 import org.jetbrains.kotlin.gradle.plugin.*
 
 plugins {
-	id("io.fluidsonic.gradle") version "1.1.21"
+	id("io.fluidsonic.gradle") version "1.1.22"
 }
 
 fluidLibrary(name = "i18n", version = "0.9.3")
@@ -11,12 +11,12 @@ fluidLibraryModule(description = "Kotlin multiplatform internationalization libr
 	targets {
 		common {
 			dependencies {
-				implementation(fluid("country", "0.9.4"))
-				implementation(fluid("currency", "0.9.4"))
+				implementation(fluid("country", "0.9.5"))
+				implementation(fluid("currency", "0.9.5"))
 				implementation(project(":fluid-i18n-data-identifiers"))
 				implementation(project(":fluid-i18n-data-regions"))
 
-				api(fluid("locale", "0.9.5"))
+				api(fluid("locale", "0.9.6"))
 			}
 		}
 

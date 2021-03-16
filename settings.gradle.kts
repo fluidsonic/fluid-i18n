@@ -1,5 +1,12 @@
 rootProject.name = "fluid-i18n"
 
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+		mavenCentral()
+	}
+}
+
 includeBuild("modules/data-generator")
 
 file("modules")
