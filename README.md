@@ -18,7 +18,7 @@ Installation
 
 ```kotlin
 dependencies {
-	implementation("io.fluidsonic.i18n:fluid-i18n:0.9.3")
+	implementation("io.fluidsonic.i18n:fluid-i18n:0.9.4")
 }
 ```
 
