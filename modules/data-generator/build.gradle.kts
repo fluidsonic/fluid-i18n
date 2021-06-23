@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.*
 
 plugins {
 	`java-gradle-plugin`
-	kotlin("jvm") version "1.4.31"
-	id("com.github.ben-manes.versions") version "0.38.0"
+	kotlin("jvm") version "1.5.10"
+	id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 group = "io.fluidsonic.i18n.data.generator"
@@ -44,7 +44,7 @@ dependencies {
 	implementation("com.squareup:kotlinpoet:1.7.2")
 
 	api("io.fluidsonic.cldr:fluid-cldr:0.9.3-37")
-	api("io.fluidsonic.locale:fluid-locale:0.9.6")
+	api("io.fluidsonic.locale:fluid-locale:0.10.0")
 }
 
 tasks.withType<KotlinCompile> {

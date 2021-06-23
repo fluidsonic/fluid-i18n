@@ -2,7 +2,7 @@ import io.fluidsonic.gradle.*
 import org.jetbrains.kotlin.gradle.plugin.*
 
 plugins {
-	id("io.fluidsonic.gradle") version "1.1.22"
+	id("io.fluidsonic.gradle") version "1.1.23"
 }
 
 fluidLibrary(name = "i18n", version = "0.9.4")
@@ -11,18 +11,16 @@ fluidLibraryModule(description = "Kotlin multiplatform internationalization libr
 	targets {
 		common {
 			dependencies {
-				implementation(fluid("country", "0.9.5"))
-				implementation(fluid("currency", "0.9.5"))
+				implementation(fluid("country", "0.10.0"))
+				implementation(fluid("currency", "0.10.1"))
 				implementation(project(":fluid-i18n-data-identifiers"))
 				implementation(project(":fluid-i18n-data-regions"))
 
-				api(fluid("locale", "0.9.6"))
+				api(fluid("locale", "0.10.0"))
 			}
 		}
 
-		darwin {
-			withoutWatchosX64() // https://github.com/Kotlin/kotlinx.serialization/pull/1285
-		}
+		darwin()
 		js(KotlinJsCompilerType.BOTH)
 		jvm()
 	}
