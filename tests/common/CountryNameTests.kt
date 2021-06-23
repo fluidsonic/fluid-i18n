@@ -31,7 +31,7 @@ class CountryNameTests {
 
 	@Test
 	fun testGermanExamples() {
-		val locale = Locale.forLanguage("de")
+		val locale = Locale.forLanguageTag("de-DE")
 
 		assertEquals(expected = "Deutschland", actual = germany.name(locale))
 		assertEquals(expected = null, actual = germany.shortName(locale))

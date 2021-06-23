@@ -12,18 +12,18 @@ internal inline fun Locale.lookup(resolve: (language: Int, script: Int, region: 
 	if (language < 0)
 		return
 
-	val region = indexForLanguage(region)
+	val region = indexForRegion(region)
 	if (region < 0)
 		return
 
-	val script = indexForLanguage(script)
+	val script = indexForScript(script)
 	if (script < 0)
 		return
 
 	if (variants.size > 1)
 		return
 
-	val variant = indexForLanguage(variants.firstOrNull())
+	val variant = indexForVariant(variants.firstOrNull())
 	if (variant < 0)
 		return
 
