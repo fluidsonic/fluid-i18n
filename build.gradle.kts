@@ -5,7 +5,7 @@ plugins {
 	id("io.fluidsonic.gradle") version "1.1.25"
 }
 
-fluidLibrary(name = "i18n", version = "0.10.0")
+fluidLibrary(name = "i18n", version = "0.11.0")
 
 fluidLibraryModule(description = "Kotlin multiplatform internationalization library") {
 	targets {
