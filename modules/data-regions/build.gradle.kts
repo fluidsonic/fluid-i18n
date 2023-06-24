@@ -10,7 +10,7 @@ plugins {
 fluidLibraryModule(description = "Internationalization data used by fluid-i18n") {
 	targets {
 		darwin()
-		js(KotlinJsCompilerType.BOTH)
+		js()
 		jvm()
 	}
 }

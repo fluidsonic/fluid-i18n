@@ -17,7 +17,7 @@ public object IdentifierFileGenerator {
 
 		Files.newOutputStream(destination).writer().use { writer ->
 			FileSpec.builder(packageName = "io.fluidsonic.i18n.data", fileName = destination.fileName.toString())
-				.addComment(Generation.fileComment)
+				.addFileComment(Generation.fileComment)
 				.addFunction(FunSpec.builder("indexForLanguage")
 					.addParameter("language", KotlinTypes.stringNullable)
 					.returns(KotlinTypes.int)

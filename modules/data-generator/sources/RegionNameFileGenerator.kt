@@ -22,7 +22,7 @@ public object RegionNameFileGenerator {
 
 		Files.newOutputStream(destination).writer().use { writer ->
 			FileSpec.builder(packageName = "io.fluidsonic.i18n.data", fileName = destination.fileName.toString())
-				.addComment(Generation.fileComment)
+				.addFileComment(Generation.fileComment)
 				.addFunction(FunSpec.builder("localizedNameForRegion_$alternative")
 					.addParameter("query", KotlinTypes.int)
 					.addParameter("language", KotlinTypes.int)
@@ -106,7 +106,7 @@ public object RegionNameFileGenerator {
 	}
 
 
-	private fun generateBlockForScript(script: String?, namesByLanguageTag: List<Pair<LanguageTag, List<Pair<String, String>>>>): CodeBlock? {
+	private fun generateBlockForScript(script: String?, namesByLanguageTag: List<Pair<LanguageTag, List<Pair<String, String>>>>): CodeBlock {
 		return buildCodeBlock {
 			val singleEntry = namesByLanguageTag.singleOrNull()
 			if (singleEntry != null) {
