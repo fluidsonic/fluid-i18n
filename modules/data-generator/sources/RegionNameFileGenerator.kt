@@ -8,6 +8,11 @@ import java.nio.file.*
 
 public object RegionNameFileGenerator {
 
+	/**
+	 * Maximum number of language functions per file to avoid hitting the JVM class file size limit.
+	 */
+	private const val maxLanguagesPerFile: Int = 50
+
 	public fun generate(destination: Path, alternative: CldrRegionNameAlternative) {
 		val languageFunSpecs = Identifiers.languageTags
 			.groupBy { it.language }
@@ -20,32 +25,26 @@ public object RegionNameFileGenerator {
 					?.let { language to it }
 			}
 
+		if (languageFunSpecs.size <= maxLanguagesPerFile) {
+			// Small enough to fit in a single file.
+			generateSingleFile(destination, alternative, languageFunSpecs)
+		}
+		else {
+			// Split across multiple files to avoid JVM class file size limit.
+			generateSplitFiles(destination, alternative, languageFunSpecs)
+		}
+	}
+
+
+	private fun generateSingleFile(
+		destination: Path,
+		alternative: CldrRegionNameAlternative,
+		languageFunSpecs: List<Pair<String?, FunSpec>>,
+	) {
 		Files.newOutputStream(destination).writer().use { writer ->
 			FileSpec.builder(packageName = "io.fluidsonic.i18n.data", fileName = destination.fileName.toString())
 				.addFileComment(Generation.fileComment)
-				.addFunction(FunSpec.builder("localizedNameForRegion_$alternative")
-					.addParameter("query", KotlinTypes.int)
-					.addParameter("language", KotlinTypes.int)
-					.addParameter("script", KotlinTypes.int)
-					.addParameter("region", KotlinTypes.int)
-					.addParameter("variant", KotlinTypes.int)
-					.returns(KotlinTypes.stringNullable)
-					.addCode(buildCodeBlock {
-						beginControlFlow("return when (language)")
-						run {
-							languageFunSpecs.forEach { (language, funSpec) ->
-								add(
-									"%L·->·%N(query,·script,·region,·variant)\n",
-									Identifiers.indexByLanguage(language),
-									funSpec.name
-								)
-							}
-							add("else -> null\n")
-						}
-						endControlFlow()
-					})
-					.build()
-				)
+				.addFunction(buildDispatchFunction(alternative, languageFunSpecs))
 				.apply {
 					languageFunSpecs.forEach { (_, funSpec) -> addFunction(funSpec) }
 				}
@@ -53,6 +52,79 @@ public object RegionNameFileGenerator {
 				.writeTo(writer)
 		}
 	}
+
+
+	private fun generateSplitFiles(
+		destination: Path,
+		alternative: CldrRegionNameAlternative,
+		languageFunSpecs: List<Pair<String?, FunSpec>>,
+	) {
+		val chunks = languageFunSpecs.chunked(maxLanguagesPerFile)
+		val directory = destination.parent
+
+		// Make per-language functions internal so they can be called from the dispatch file.
+		val internalLanguageFunSpecs = languageFunSpecs.map { (language, funSpec) ->
+			language to funSpec.toBuilder().apply {
+				modifiers.remove(KModifier.PRIVATE)
+				addModifiers(KModifier.INTERNAL)
+			}.build()
+		}
+
+		val internalChunks = internalLanguageFunSpecs.chunked(maxLanguagesPerFile)
+
+		// Write dispatch file (the main destination file).
+		Files.newOutputStream(destination).writer().use { writer ->
+			FileSpec.builder(packageName = "io.fluidsonic.i18n.data", fileName = destination.fileName.toString())
+				.addFileComment(Generation.fileComment)
+				.addFunction(buildDispatchFunction(alternative, internalLanguageFunSpecs))
+				.build()
+				.writeTo(writer)
+		}
+
+		// Write chunk files with the per-language functions.
+		internalChunks.forEachIndexed { index, chunk ->
+			val chunkFileName = destination.fileName.toString().removeSuffix(".kt") + "_part${index + 1}.kt"
+			val chunkPath = directory.resolve(chunkFileName)
+
+			Files.newOutputStream(chunkPath).writer().use { writer ->
+				FileSpec.builder(packageName = "io.fluidsonic.i18n.data", fileName = chunkFileName)
+					.addFileComment(Generation.fileComment)
+					.apply {
+						chunk.forEach { (_, funSpec) -> addFunction(funSpec) }
+					}
+					.build()
+					.writeTo(writer)
+			}
+		}
+	}
+
+
+	private fun buildDispatchFunction(
+		alternative: CldrRegionNameAlternative,
+		languageFunSpecs: List<Pair<String?, FunSpec>>,
+	): FunSpec =
+		FunSpec.builder("localizedNameForRegion_$alternative")
+			.addParameter("query", KotlinTypes.int)
+			.addParameter("language", KotlinTypes.int)
+			.addParameter("script", KotlinTypes.int)
+			.addParameter("region", KotlinTypes.int)
+			.addParameter("variant", KotlinTypes.int)
+			.returns(KotlinTypes.stringNullable)
+			.addCode(buildCodeBlock {
+				beginControlFlow("return when (language)")
+				run {
+					languageFunSpecs.forEach { (language, funSpec) ->
+						add(
+							"%L·->·%N(query,·script,·region,·variant)\n",
+							Identifiers.indexByLanguage(language),
+							funSpec.name
+						)
+					}
+					add("else -> null\n")
+				}
+				endControlFlow()
+			})
+			.build()
 
 
 	private fun generateBlockForNames(names: List<Pair<String, String>>): CodeBlock = buildCodeBlock {
@@ -132,7 +204,6 @@ public object RegionNameFileGenerator {
 					namesByLanguageTag.forEach { (tag, namesByLanguageForVariant) ->
 						add("%L -> ", Identifiers.indexByVariant(tag.variants.singleOrNull()))
 						add(generateBlockForNames(namesByLanguageForVariant))
-						add("false -> null\n")
 					}
 					add("else -> null\n")
 				}

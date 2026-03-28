@@ -2,8 +2,17 @@ rootProject.name = "fluid-i18n"
 
 pluginManagement {
 	repositories {
+		mavenLocal()
 		gradlePluginPortal()
 		mavenCentral()
+		maven("https://maven.pkg.github.com/fluidsonic/fluid-cldr") {
+			credentials {
+				username = "unused"
+				password = providers.gradleProperty("GITHUB_PACKAGES_AUTH_TOKEN").orNull
+					?: System.getenv("GITHUB_PACKAGES_AUTH_TOKEN")
+					?: ""
+			}
+		}
 	}
 }
 

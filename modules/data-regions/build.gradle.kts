@@ -9,8 +9,7 @@ plugins {
 
 fluidLibraryModule(description = "Internationalization data used by fluid-i18n") {
 	targets {
-		darwin()
-		js()
+		@Suppress("DEPRECATION") js()
 		jvm()
 	}
 }
@@ -22,6 +21,11 @@ tasks.register("generateCode") {
 		outputs.file(destination)
 
 		doLast {
+			// Clean up any previously generated part files.
+			file("sources").listFiles()
+				?.filter { it.name.startsWith("RegionNames_${alternative}.generated") && it.name != "RegionNames_$alternative.generated.kt" }
+				?.forEach { it.delete() }
+
 			RegionNameFileGenerator.generate(destination = destination, alternative = alternative)
 		}
 	}
